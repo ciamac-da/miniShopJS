@@ -1,6 +1,6 @@
 
 const productsList ={
-     products =[
+     products :[
         {
             title: "The last of us II",
     imageUrl:"https://images-na.ssl-images-amazon.com/images/I/71UDXCGb8cL._AC_SY679_.jpg",
@@ -13,5 +13,11 @@ const productsList ={
     price : 49.99,
     description:"Action-Adventure"
 },
-]
+],
+render(){
+    const renderHook = document.getElementById("app");
+    const prodList = document.createElement("ul");
+    prodList.className = "product-list"
+    renderHook.append()
+}
 }
