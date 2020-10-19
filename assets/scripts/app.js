@@ -3,7 +3,7 @@ const productsList ={
      products :[
         {
             title: "The last of us II",
-    imageUrl:"https://images-na.ssl-images-amazon.com/images/I/71UDXCGb8cL._AC_SY679_.jpg",
+    imageUrl:"https://img.youtube.com/vi/ZyDOeshZFfg/maxresdefault.jpg",
     price : 69.99,
     description:"Action-Adventure"
 },
@@ -18,6 +18,24 @@ render(){
     const renderHook = document.getElementById("app");
     const prodList = document.createElement("ul");
     prodList.className = "product-list"
-    renderHook.append()
+    for (const prod of this.products){
+        const prodEl = document.createElement("li");
+        prodEl.className = "product-item";
+        prodList.append(prodEl);
+        prodEl.innerHTML = `
+        <div>
+        <img src="${prod.imageUrl}" alt="${prod.title}">
+        <div class="product-item__content">
+        <h2>${prod.title}</h2>
+        <h3>$${prod.price}</h3>
+        <p>${prod.description}</p>
+        <button>Add to Cart</button>
+        </div>
+        </div>
+        `
+        prodList.append(prodEl)
+    }
+    renderHook.append(prodList)
 }
 }
+productsList.render()
