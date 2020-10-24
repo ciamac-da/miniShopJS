@@ -1,6 +1,16 @@
 
+class Product  {
+title = "DEFAULT";
+imageUrl;
+description;
+price;
+}
+
+
 const productsList ={
-     products :[
+    products :[
+        new Product(),
+        console.log(new Product()),
         {
             title: "The last of us II",
     imageUrl:"https://img.youtube.com/vi/ZyDOeshZFfg/maxresdefault.jpg",
