@@ -11,6 +11,10 @@ class ProductItem {
     constructor(product){
         this.product = product
     }
+            addTOcart(){
+                console.log(this.product);
+            }
+
     render(){
         const prodEl = document.createElement("li");
         prodEl.className = "product-item";
@@ -24,6 +28,8 @@ class ProductItem {
         <button>Add to Cart</button>
         </div>
         </div>`;
+        const addCartButton = prodEl.querySelector("button");
+        addCartButton.addEventListener("click", this.addTOcart.bind(this))
         return prodEl
     }
 }
@@ -37,7 +43,7 @@ class ProductsList {
         69.99,
         ),
         new Product("Metro Exodus", 
-        "https://cdn.vox-cdn.com/thumbor/aRM2buml6QShnavgszXDLn9IcJo=/1400x1050/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/19702068/_assets_Uploads_MetroExodus_SUMMER_WallPaper_1920x1200.jpg",69.99,"Action-Adventure",
+        "https://cdn.vox-cdn.com/thumbor/aRM2buml6QShnavgszXDLn9IcJo=/1400x1050/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/19702068/_assets_Uploads_MetroExodus_SUMMER_WallPaper_1920x1200.jpg",
         "Action-Adventure",
         49.99,
         ),
