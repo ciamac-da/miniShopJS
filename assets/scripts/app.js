@@ -20,8 +20,11 @@ class Product {
   }
   
   class Component {
-    constructor(renderHookId) {
+    constructor(renderHookId, shouldRender = true) {
       this.hookId = renderHookId;
+      if(shouldRender){
+        this.render();
+      }
     }
   
     createRootElement(tag, cssClasses, attributes) {
@@ -75,9 +78,11 @@ class Product {
     }
   }
   
-  class ProductItem {
-    constructor(product) {
+  class ProductItem extends Component {
+    constructor(product, renderHookId) {
+      super(renderHookId, false)
       this.product = product;
+      this.render()
     }
   
     addToCart() {
@@ -104,46 +109,52 @@ class Product {
     }
   }
   
-  class ProductList {
-    products = [
-      new Product(
-        'A Pillow',
-        'https://www.maxpixel.net/static/photo/2x/Soft-Pillow-Green-Decoration-Deco-Snuggle-1241878.jpg',
-        'A soft pillow!',
-        19.99
-      ),
-      new Product(
-        'A Carpet',
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Ardabil_Carpet.jpg/397px-Ardabil_Carpet.jpg',
-        'A carpet which you might like - or not.',
-        89.99
-      )
-    ];
+  class ProductList extends Component {
+    products = [];
+    constructor(renderHookId) {
+      super(renderHookId)
+      this.fetchProducts();
+    }
+
+    fetchProducts() {
+      this.products = [
+        new Product(
+          'A Pillow',
+          'https://www.maxpixel.net/static/photo/2x/Soft-Pillow-Green-Decoration-Deco-Snuggle-1241878.jpg',
+          'A soft pillow!',
+          19.99
+        ),
+        new Product(
+          'A Carpet',
+          'https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Ardabil_Carpet.jpg/397px-Ardabil_Carpet.jpg',
+          'A carpet which you might like - or not.',
+          89.99
+        )
+      ];
+      this.renderProducts();
+    }
   
-    constructor() {}
-  
-    render() {
-      const prodList = document.createElement('ul');
-      prodList.className = 'product-list';
+    renderProducts(){
       for (const prod of this.products) {
-        const productItem = new ProductItem(prod);
-        const prodEl = productItem.render();
-        prodList.append(prodEl);
+        new ProductItem(prod, "prod-list");
       }
-      return prodList;
+    }
+    
+    render() {
+      this.createRootElement("ul", "product-list", [new ElementAttribute("id", "prod-list")])
+    if(this.products && this.products.length > 0){
+      this.renderProducts();
+    }
     }
   }
   
-  class Shop {
+  class Shop extends Component{
+    constructor(){
+      super()
+    }
     render() {
-      const renderHook = document.getElementById('app');
-  
       this.cart = new ShoppingCart('app');
-      this.cart.render();
-      const productList = new ProductList();
-      const prodListEl = productList.render();
-  
-      renderHook.append(prodListEl);
+      new ProductList("app");
     }
   }
   
@@ -152,7 +163,6 @@ class Product {
   
     static init() {
       const shop = new Shop();
-      shop.render();
       this.cart = shop.cart;
     }
   
